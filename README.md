@@ -63,3 +63,38 @@ Add additional layers to the application that will ensure that it is scaleable w
 
 * Please feel free to change or refactor any code that has been supplied within the solution and think about clean maintainable code and architecture when extending the project.
 * If any additional packages, tools or setup are required to run your completed version, please document these thoroughly.
+
+## Submission Notes
+
+Sections 1, 2 and 6 are implemented. No additional packages were added.
+
+### Requirements
+
+The .NET 9 SDK is required. `global.json` pins it so that CI and local builds cannot
+silently diverge; with an older SDK installed the build will fail on that pin.
+
+```
+dotnet restore
+dotnet build
+dotnet test
+dotnet run --project UserManagement.Web
+```
+
+### Notes on the implementation
+
+**1. Filters** — `FilterByActive` applies the predicate to the `IQueryable` rather than
+filtering in memory, so the work stays in the query. The controller takes a single
+`bool? isActive` parameter, which serves all three buttons without extra actions or
+routes, and keeps the existing `List()` call site working. An unparseable query value
+binds to null and falls back to showing all users.
+
+**2. DateOfBirth** — typed as `DateOnly` rather than `DateTime`: a date of birth has no
+time or timezone component, and the type makes that unrepresentable.
+
+**6. CI** — `.github/workflows/ci.yml` runs restore, build, test and publish on every push
+and pull request, uploading test results and the published application as artifacts. The
+build runs against the solution's existing `TreatWarningsAsErrors`, so a new warning fails
+the pipeline rather than reaching the default branch.
+
+Section 3 is not implemented, so the per-row Actions links remain the placeholders
+supplied with the exercise.

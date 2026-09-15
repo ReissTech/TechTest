@@ -30,6 +30,19 @@ public class DataContextTests
     }
 
     [Fact]
+    public void GetAll_WhenSeeded_MustPopulateDateOfBirth()
+    {
+        // Arrange: Initializes objects and sets the value of the data that is passed to the method under test.
+        var context = CreateContext();
+
+        // Act: Invokes the method under test with the arranged parameters.
+        var result = context.GetAll<User>();
+
+        // Assert: Verifies that the action of the method under test behaves as expected.
+        result.Should().OnlyContain(u => u.DateOfBirth != default);
+    }
+
+    [Fact]
     public void GetAll_WhenDeleted_MustNotIncludeDeletedEntity()
     {
         // Arrange: Initializes objects and sets the value of the data that is passed to the method under test.

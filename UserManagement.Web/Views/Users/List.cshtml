@@ -10,6 +10,7 @@
                 <th>Forename</th>
                 <th>Surname</th>
                 <th>Email</th>
+                <th>Date of Birth</th>
                 <th>Account Active</th>
                 <th style="width: 1px;"></th>
             </tr>
@@ -29,6 +30,9 @@
                     </td>
                     <td>
                         @item.Email
+                    </td>
+                    <td>
+                        @item.DateOfBirth.ToString("dd/MM/yyyy")
                     </td>
                     <td>
                         @(item.IsActive ? "Yes" : "No")
@@ -53,9 +57,9 @@
 
 <div>
     <div class="btn-group" role="group">
-        <a asp-controller="Users" asp-action="List" class="btn btn-default">Show All</a>
-        <a href="#" class="btn btn-default">Active Only</a>
-        <a href="#" class="btn btn-default">Non Active</a>
+        <a asp-action="List" class="btn @(Model.IsActive is null ? "btn-primary" : "btn-default")">Show All</a>
+        <a asp-action="List" asp-route-isActive="true" class="btn @(Model.IsActive == true ? "btn-primary" : "btn-default")">Active Only</a>
+        <a asp-action="List" asp-route-isActive="false" class="btn @(Model.IsActive == false ? "btn-primary" : "btn-default")">Non Active</a>
     </div>
 
     <a href="#" class="btn btn-primary float-end">

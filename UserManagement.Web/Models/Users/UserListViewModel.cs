@@ -3,6 +3,7 @@
 public class UserListViewModel
 {
     public List<UserListItemViewModel> Items { get; set; } = new();
+    public bool? IsActive { get; set; }
 }
 
 public class UserListItemViewModel
@@ -11,5 +12,9 @@ public class UserListItemViewModel
     public string? Forename { get; set; }
     public string? Surname { get; set; }
     public string? Email { get; set; }
+
+    [Display(Name = "Date of Birth"), DataType(DataType.Date)]
+    public DateOnly DateOfBirth { get; set; }
+
     public bool IsActive { get; set; }
 }
